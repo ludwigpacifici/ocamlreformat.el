@@ -1,4 +1,4 @@
-;;; ocamlreformat.el --- Automatically format an Ocaml buffer -*- lexical-binding: t; -*-
+;;; ocamlreformat.el --- Automatically format an OCaml buffer -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2010  Ludwig PACIFICI
 
@@ -37,7 +37,7 @@
   :group 'ocamlreformat)
 
 (defcustom ocamlreformat-enable 'enable
-  "Enable or disable ocamlreformat."
+  "Enable or disable OCamlReformat."
   :type '(choice
           (const :tag "Enable" enable)
           (const :tag "Disable outside detected project"

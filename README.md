@@ -1,4 +1,4 @@
-# ocaml*re*format.el
+# OCaml*Re*format.el
 
 ## Goal
 

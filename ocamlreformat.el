@@ -90,7 +90,7 @@
                     :program ocamlreformat-command
                     :args (make-args)
                     :group 'ocamlreformat
-                    :lighter " OcamlFmt")
+                    :lighter nil)
 
 ;;;###autoload
 (define-obsolete-function-alias 'ocamlreformat-before-save 'ocamlreformat-on-save-mode

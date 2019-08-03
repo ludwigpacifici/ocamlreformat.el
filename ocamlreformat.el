@@ -40,8 +40,8 @@
   "Enable or disable OCamlReformat."
   :type '(choice
           (const :tag "Enable" enable)
-          (const :tag "Disable outside detected project"
-                 disable-outside-detected-project)
+          (const :tag "Enable outside detected project"
+                 enable-outside-detected-project)
           (const :tag "Disable" disable))
   :group 'ocamlreformat)
 
@@ -53,12 +53,21 @@
           (const :tag "None" nil))
   :group 'ocamlreformat)
 
+(defcustom ocamlreformat-file-kind nil
+  "Add a parse argument to ocamlformat if using an unrecognized extension. It
+    can either be set to 'implementation, 'interface or nil (default)."
+  :type '(choice
+          (const :tag "implementation" 'implementation)
+          (const :tag "interface" 'interface)
+          (const :tag "none" nil))
+  :group 'ocamlformat)
+
 (defun args-from-ocamlreformat-enable (arg)
   (cond
    ((equal arg 'disable)
     (list "--disable"))
-   ((equal arg 'disable-outside-detected-project)
-    (list "--disable-outside-detected-project"))))
+   ((equal arg 'enable-outside-detected-project)
+    (list "--enable-outside-detected-project"))))
 
 (defun args-from-ocamlreformat-margin-mode (arg)
   (cond
@@ -66,6 +75,13 @@
     (list "--margin" (number-to-string (window-body-width))))
    ((equal arg 'fill)
     (list "--margin" (number-to-string fill-column)))))
+
+(defun args-from-file-kind (arg)
+  (cond
+   ((equal arg 'implementation)
+    (list "--impl"))
+   ((equal arg 'interface)
+    (list "--intf"))))
 
 (defun args-from-ocamlreformat-name (arg)
   (list "--name" arg))
@@ -84,13 +100,14 @@
     (args-from-ocamlreformat-enable ocamlreformat-enable)
     (args-from-ocamlreformat-name (buffer-file-name))
     (args-from-ocamlreformat-margin-mode ocamlreformat-margin-mode)
+    (args-from-file-kind ocamlreformat-file-kind)
     (args-from-ocamlreformat-stdin))))
 
 (reformatter-define ocamlreformat
-                    :program ocamlreformat-command
-                    :args (make-args)
-                    :group 'ocamlreformat
-                    :lighter nil)
+  :program ocamlreformat-command
+  :args (make-args)
+  :group 'ocamlreformat
+  :lighter nil)
 
 ;;;###autoload
 (define-obsolete-function-alias 'ocamlreformat-before-save 'ocamlreformat-on-save-mode
